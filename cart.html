@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Cart - Muji Events</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="events-page">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg events-navbar">
+        <div class="container-fluid">
+
+            <a class="navbar-brand fw-bold fs-4"
+               href="dashboard.html">Muji Events</a>
+
+            <button class="navbar-toggler border-0"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Events</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="aboutus.html">About Us</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Feedback</a>
+                    </li>
+
+                </ul>
+
+                <ul class="navbar-nav flex-row gap-3">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-person-fill me-1"></i> Logout
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold position-relative active"
+                           aria-current="page"
+                           href="cart.html">
+
+                            <i class="bi bi-cart3 me-1"></i> Cart
+
+                            <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                                0
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- CART CONTENT -->
+    <main class="events-main container">
+
+        <section class="cart-section mx-auto">
+
+            <p class="section-eyebrow">Your selection</p>
+            <h1 class="section-title mb-4">Your Cart</h1>
+
+            <!-- EMPTY CART -->
+            <div id="emptyMessage"
+                 class="event-card text-center py-5 d-none">
+
+                <i class="bi bi-cart-x text-muted mb-3 cart-empty-icon"></i>
+
+                <h5 class="fw-light text-muted">
+                    Your cart is currently empty.
+                </h5>
+
+                <a href="events.html"
+                   class="muji-btn mt-3 d-inline-block text-decoration-none">
+                    Browse Events
+                </a>
+
+            </div>
+
+
+            <!-- CART WITH ITEMS -->
+            <div id="cartContent" class="d-none">
+
+                <div class="event-card mb-4">
+
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+
+                        <div>
+                            <h5 class="mb-1">
+                                Event Tickets (General Admission)
+                            </h5>
+
+                            <p class="text-muted mb-0 small">
+                                Access to selected Muji Management Events.
+                            </p>
+                        </div>
+
+                        <div class="text-end">
+                            <h5 class="fw-normal mb-0">
+                                x <span id="ticketCountDisplay">0</span>
+                            </h5>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-2">
+
+                        <h5 class="fw-light mb-0">Subtotal</h5>
+
+                        <h4 class="fw-bold mb-0 cart-total"
+                            id="totalPriceDisplay">
+                            RM 0.00
+                        </h4>
+
+                    </div>
+
+                    <p class="text-muted small mt-2 mb-0">
+                        Ticket price: RM 150 per ticket
+                    </p>
+
+                </div>
+
+                <div class="d-flex justify-content-between cart-actions">
+
+                    <button type="button"
+                            class="btn btn-light"
+                            id="clearCartBtn">
+                        Clear Cart
+                    </button>
+
+                    <button type="button"
+                            class="muji-btn"
+                            id="checkoutBtn">
+                        <i class="bi bi-lock-fill me-1"></i>
+                        Secure Checkout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal fade"
+         id="paymentModal"
+         tabindex="-1"
+         aria-labelledby="paymentModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content border-0 rounded-3">
+
+                <div class="modal-header border-bottom">
+
+                    <div>
+                        <p class="section-eyebrow mb-1">
+                            Secure checkout
+                        </p>
+
+                        <h5 class="modal-title fw-bold"
+                            id="paymentModalLabel">
+                            Choose Payment Method
+                        </h5>
+                    </div>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+
+                </div>
+
+                <div class="modal-body p-4">
+
+                    <p class="text-muted small mb-3">
+                        Select your preferred payment method to continue.
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center p-3 mb-4 rounded-3"
+                         style="background-color: #f5f3ee;">
+
+                        <span class="text-muted">Total Payment</span>
+
+                        <h4 class="fw-bold mb-0" id="paymentTotal">
+                            RM 0.00
+                        </h4>
+
+                    </div>
+
+                    <form id="paymentForm">
+
+                        <!-- ONLINE BANKING -->
+                        <label for="onlineBanking"
+                               class="d-flex align-items-center gap-3 p-3 mb-3 border rounded-3"
+                               style="cursor: pointer;">
+
+                            <input class="form-check-input flex-shrink-0 mt-0"
+                                   type="radio"
+                                   name="paymentMethod"
+                                   id="onlineBanking"
+                                   value="Online Banking (FPX)"
+                                   required>
+
+                            <i class="bi bi-bank fs-3"></i>
+
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">
+                                    Online Banking (FPX)
+                                </div>
+
+                                <small class="text-muted">
+                                    Maybank, CIMB, Bank Islam and more
+                                </small>
+                            </div>
+
+                        </label>
+
+                        <!-- E-WALLET -->
+                        <label for="ewallet"
+                               class="d-flex align-items-center gap-3 p-3 mb-3 border rounded-3"
+                               style="cursor: pointer;">
+
+                            <input class="form-check-input flex-shrink-0 mt-0"
+                                   type="radio"
+                                   name="paymentMethod"
+                                   id="ewallet"
+                                   value="E-Wallet"
+                                   required>
+
+                            <i class="bi bi-wallet2 fs-3"></i>
+
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">
+                                    E-Wallet
+                                </div>
+
+                                <small class="text-muted">
+                                    Touch 'n Go eWallet, GrabPay and more
+                                </small>
+                            </div>
+
+                        </label>
+
+                        <!-- CARD -->
+                        <label for="bankCard"
+                               class="d-flex align-items-center gap-3 p-3 mb-3 border rounded-3"
+                               style="cursor: pointer;">
+
+                            <input class="form-check-input flex-shrink-0 mt-0"
+                                   type="radio"
+                                   name="paymentMethod"
+                                   id="bankCard"
+                                   value="Credit / Debit Card"
+                                   required>
+
+                            <i class="bi bi-credit-card fs-3"></i>
+
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">
+                                    Credit / Debit Card
+                                </div>
+
+                                <small class="text-muted">
+                                    Visa and Mastercard
+                                </small>
+                            </div>
+
+                        </label>
+
+                        <p class="text-muted small mt-3">
+                            <i class="bi bi-shield-lock me-1"></i>
+                            Please select a payment method to continue.
+                        </p>
+
+                        <div id="paymentError"
+                             class="alert alert-danger py-2 small d-none"
+                             role="alert">
+                            Please select a payment method.
+                        </div>
+
+                        <button type="submit"
+                                class="muji-btn w-100 mt-2">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Confirm Payment
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- PAYMENT SUCCESS MODAL -->
+    <div class="modal fade"
+         id="successModal"
+         tabindex="-1"
+         aria-labelledby="successModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content border-0 rounded-3">
+
+                <div class="modal-body text-center p-5">
+
+                    <i class="bi bi-check-circle-fill text-success"
+                       style="font-size: 3.5rem;"></i>
+
+                    <h4 class="fw-bold mt-3" id="successModalLabel">
+                        Booking Confirmed!
+                    </h4>
+
+                    <p class="text-muted mt-2">
+                        Your demo booking has been confirmed.
+                    </p>
+
+                    <p class="small mb-4">
+                        Payment method:
+                        <strong id="confirmedMethod"></strong>
+                        <br>
+                        Total:
+                        <strong id="confirmedTotal"></strong>
+                    </p>
+
+                    <button type="button"
+                            class="muji-btn w-100"
+                            id="finishBtn">
+                        Back to Dashboard
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer class="events-footer">
+        <div class="container">
+            <p class="small text-muted mb-0">
+                &copy; 2026 Muji Event Management System.
+                Structured metadata and minimalist design applied.
+            </p>
+        </div>
+    </footer>
+
+
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- CART AND PAYMENT SCRIPT -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const ITEMS_KEY = 'mujiCartItems';
+        const COUNT_KEY = 'mujiCartCount';
+        const DEFAULT_TICKET_PRICE = 150;
+
+        const cartBadge = document.querySelector('.cart-badge');
+        const cartContent = document.getElementById('cartContent');
+        const emptyMessage = document.getElementById('emptyMessage');
+
+        const ticketCountDisplay = document.getElementById('ticketCountDisplay');
+        const totalPriceDisplay = document.getElementById('totalPriceDisplay');
+
+        const clearCartBtn = document.getElementById('clearCartBtn');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        const paymentForm = document.getElementById('paymentForm');
+        const paymentTotal = document.getElementById('paymentTotal');
+        const paymentError = document.getElementById('paymentError');
+
+        const paymentModalElement = document.getElementById('paymentModal');
+        const successModalElement = document.getElementById('successModal');
+
+        const paymentModal = bootstrap.Modal.getOrCreateInstance(
+            paymentModalElement
+        );
+
+        const successModal = bootstrap.Modal.getOrCreateInstance(
+            successModalElement
+        );
+
+        let cartItems = [];
+
+        // Read saved cart items safely
+        function readCartItems() {
+            try {
+                const savedItems = localStorage.getItem(ITEMS_KEY);
+
+                if (savedItems === null) {
+                    return [];
+                }
+
+                const parsedItems = JSON.parse(savedItems);
+
+                return Array.isArray(parsedItems) ? parsedItems : [];
+
+            } catch (error) {
+                console.error('Cart data error:', error);
+                return [];
+            }
+        }
+
+        // Support common quantity and price property names
+        function getQuantity(item) {
+            const quantity = Number(
+                item.quantity ?? item.qty ?? item.count ?? 1
+            );
+
+            return Number.isFinite(quantity) && quantity > 0
+                ? quantity
+                : 0;
+        }
+
+        function getPrice(item) {
+            const rawPrice = item.price ?? item.ticketPrice ?? DEFAULT_TICKET_PRICE;
+
+            const price = Number(
+                typeof rawPrice === 'string'
+                    ? rawPrice.replace(/[^0-9.]/g, '')
+                    : rawPrice
+            );
+
+            return Number.isFinite(price) && price >= 0
+                ? price
+                : DEFAULT_TICKET_PRICE;
+        }
+
+        function getCartCount() {
+            return cartItems.reduce(function (sum, item) {
+                return sum + getQuantity(item);
+            }, 0);
+        }
+
+        function getCartTotal() {
+            return cartItems.reduce(function (sum, item) {
+                return sum + (getQuantity(item) * getPrice(item));
+            }, 0);
+        }
+
+        function formatRM(amount) {
+            return 'RM ' + amount.toLocaleString('en-MY', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Keep cart count and cart items synchronized
+        function saveCart() {
+            localStorage.setItem(ITEMS_KEY, JSON.stringify(cartItems));
+            localStorage.setItem(COUNT_KEY, String(getCartCount()));
+        }
+
+        // Refresh the cart display
+        function renderCart() {
+            const count = getCartCount();
+            const total = getCartTotal();
+
+            if (cartBadge) {
+                cartBadge.textContent = count;
+            }
+
+            ticketCountDisplay.textContent = count;
+            totalPriceDisplay.textContent = formatRM(total);
+
+            if (count === 0) {
+                cartContent.classList.add('d-none');
+                emptyMessage.classList.remove('d-none');
+            } else {
+                cartContent.classList.remove('d-none');
+                emptyMessage.classList.add('d-none');
+            }
+
+            localStorage.setItem(COUNT_KEY, String(count));
+        }
+
+        // Clear the entire cart
+        clearCartBtn.addEventListener('click', function () {
+
+            cartItems = [];
+
+            localStorage.setItem(ITEMS_KEY, JSON.stringify([]));
+            localStorage.setItem(COUNT_KEY, '0');
+
+            renderCart();
+        });
+
+        // Open payment modal
+        checkoutBtn.addEventListener('click', function () {
+
+            if (getCartCount() === 0) {
+                return;
+            }
+
+            paymentTotal.textContent = formatRM(getCartTotal());
+
+            paymentForm.reset();
+            paymentError.classList.add('d-none');
+
+            paymentModal.show();
+        });
+
+        // Remove error after a payment option is selected
+        paymentForm.addEventListener('change', function () {
+            paymentError.classList.add('d-none');
+        });
+
+        // Confirm demo payment
+        paymentForm.addEventListener('submit', function (event) {
+
+            event.preventDefault();
+
+            const selectedOption = paymentForm.querySelector(
+                'input[name="paymentMethod"]:checked'
+            );
+
+            if (!selectedOption) {
+                paymentError.classList.remove('d-none');
+                return;
+            }
+
+            if (getCartCount() === 0) {
+                paymentModal.hide();
+                renderCart();
+                return;
+            }
+
+            document.getElementById('confirmedMethod').textContent =
+                selectedOption.value;
+
+            document.getElementById('confirmedTotal').textContent =
+                formatRM(getCartTotal());
+
+            // Clear cart after demo confirmation
+            cartItems = [];
+            saveCart();
+            renderCart();
+
+            paymentModalElement.addEventListener(
+                'hidden.bs.modal',
+                function () {
+                    successModal.show();
+                },
+                { once: true }
+            );
+
+            paymentModal.hide();
+        });
+
+        // Return to dashboard
+        document.getElementById('finishBtn').addEventListener('click', function () {
+            window.location.href = 'dashboard.html';
+        });
+
+        // Initialize page
+        cartItems = readCartItems();
+
+        // If no item list exists, don't restore old count as ticket data.
+        // The item list is the source of truth for the cart.
+        saveCart();
+        renderCart();
+
+    });
+    </script>
+
+</body>
+</html>

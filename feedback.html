@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Share your feedback with Muji Events.">
+    <title>Feedback | Muji Events</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* LANDSCAPE FEEDBACK FORM */
+        .feedback-main {
+            width: 100%;
+            max-width: none;
+            margin: 65px auto 85px;
+            padding: 0 clamp(16px, 4vw, 64px);
+        }
+
+        .feedback-card {
+            width: 100%;
+            background: #fffdf9;
+            padding: clamp(24px, 4vw, 48px);
+            border: 1px solid var(--muji-border, #e4ddcf);
+            border-top: 3px solid var(--muji-gold, #c6a15b);
+            border-radius: 3px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+        }
+
+        .feedback-card h2 {
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #171717;
+        }
+
+        .feedback-card p {
+            color: #777;
+        }
+
+        .feedback-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 9px;
+        }
+
+        .feedback-input {
+            width: 100%;
+            min-height: 48px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 12px 14px;
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .feedback-input:focus {
+            border-color: #c5a15b;
+            box-shadow: 0 0 0 0.15rem rgba(197,161,91,0.15);
+        }
+
+        .feedback-card textarea.feedback-input {
+            min-height: 150px;
+        }
+
+        .rating-options {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .rating-options input {
+            display: none;
+        }
+
+        .rating-options label {
+            font-size: 2rem;
+            color: #d6d6d6;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .rating-options label:hover,
+        .rating-options label:hover ~ label,
+        .rating-options input:checked ~ label {
+            color: #d6b36a;
+        }
+
+        .rating-options input:focus-visible + label {
+            outline: 2px solid #c5a15b;
+            outline-offset: 3px;
+        }
+
+        .feedback-note {
+            font-size: 0.78rem;
+            color: #888;
+        }
+
+        .feedback-success {
+            display: none;
+            padding: 18px;
+            background: #edf6ee;
+            border: 1px solid #c9e3cc;
+            color: #285c32;
+            border-radius: 4px;
+        }
+
+        .feedback-submit {
+            min-width: 220px;
+        }
+
+        @media (max-width: 767.98px) {
+            .feedback-main {
+                margin: 40px auto 60px;
+                padding: 0 14px;
+            }
+
+            .feedback-card {
+                padding: 24px 18px;
+            }
+
+            .feedback-card h2 {
+                font-size: 2rem;
+            }
+
+            .feedback-submit {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="events-page">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark events-navbar px-3 px-lg-4 sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold fs-4" href="dashboard.html">
+                MUJI <span class="fw-normal">EVENTS</span>
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto my-2 my-lg-0 gap-lg-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="aboutus.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="feedback.html">Feedback</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav flex-row align-items-center gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative pe-3" href="cart.html">
+                            <i class="bi bi-bag me-1"></i> Cart
+                            <span id="cartBadge"
+                                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="events-hero">
+        <div class="container">
+            <div class="eyebrow">
+                <i class="bi bi-chat-heart me-2"></i> Your opinion matters
+            </div>
+            <h1>We'd love to hear<br>from you.</h1>
+            <div class="gold-rule"></div>
+            <p>
+                Your feedback helps us improve our events and create
+                better experiences for everyone.
+            </p>
+        </div>
+    </header>
+    <!-- CUSTOMER REVIEWS -->
+<section class="customer-reviews">
+    <div class="text-center mb-5">
+        <p class="section-label">WHAT OUR CUSTOMERS SAY</p>
+        <h2>Customer Experiences</h2>
+        <p>Discover what our customers say about Muji Events.</p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p>
+                    "Everything was beautifully arranged!
+                    The setup made our event look elegant
+                    and memorable."
+                </p>
+                <h5>Aina Sofea</h5>
+                <small>Wedding Event</small>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p>
+                    "Excellent service and beautiful
+                    decorations. I really love the overall
+                    arrangement!"
+                </p>
+                <h5>Nur Amirah</h5>
+                <small>Birthday Celebration</small>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p>
+                    "A great experience from beginning
+                    until the end. The team was helpful
+                    and professional."
+                </p>
+                <h5>Farah Nadia</h5>
+                <small>Engagement Event</small>
+            </div>
+        </div>
+
+<!-- Review 4 -->
+<div class="col-md-4">
+    <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>
+            "Muji Events did an amazing job! The decoration
+            was simple, elegant and exactly what I wanted
+            for my special day."
+        </p>
+        <h5>Siti Aisyah</h5>
+        <small>Wedding Event</small>
+    </div>
+</div>
+
+<!-- Review 5 -->
+<div class="col-md-4">
+    <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>
+            "I am very satisfied with their service.
+            Everything was well organised, and the team
+            was friendly and helpful throughout the event."
+        </p>
+        <h5>Hana Irdina</h5>
+        <small>Birthday Celebration</small>
+    </div>
+</div>
+
+<!-- Review 6 -->
+<div class="col-md-4">
+    <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p>
+            "The event setup was beautiful and worth
+            the price. I would definitely recommend
+            Muji Events to my friends and family."
+        </p>
+        <h5>Amira Balqis</h5>
+        <small>Engagement Event</small>
+    </div>
+</div>
+
+<!-- Review 7 -->
+<div class="col-md-4">
+    <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p>
+            "Thank you for making our celebration
+            memorable! The decorations were lovely,
+            and everything was handled professionally."
+        </p>
+        <h5>Nurul Iman</h5>
+        <small>Corporate Event</small>
+    </div>
+</div>
+
+    </div>
+</section>
+
+    <!-- Feedback Form -->
+    <main class="events-main">
+        <div class="feedback-main">
+
+            <div class="feedback-card">
+
+                <div class="section-eyebrow mb-2">Share your thoughts</div>
+                <h2 class="mb-2">Send Us Your Feedback</h2>
+                <p class="mb-4">
+                    Please complete the form below. We appreciate your time
+                    and valuable suggestions.
+                </p>
+
+                <div id="successMessage" class="feedback-success mb-4" role="status" aria-live="polite">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    Thank you! Your feedback has been submitted successfully.
+                </div>
+
+                <form id="feedbackForm">
+
+                    <div class="row g-4">
+
+                        <!-- Name -->
+                        <div class="col-md-6">
+                            <label for="feedbackName" class="form-label feedback-label">
+                                Full Name *
+                            </label>
+                            <input type="text" id="feedbackName"
+                                   class="form-control feedback-input"
+                                   placeholder="Enter your full name"
+                                   maxlength="100" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label for="feedbackEmail" class="form-label feedback-label">
+                                Email Address *
+                            </label>
+                            <input type="email" id="feedbackEmail"
+                                   class="form-control feedback-input"
+                                   placeholder="example@email.com"
+                                   maxlength="150" required>
+                        </div>
+
+                        <!-- Feedback Category -->
+                        <div class="col-md-6">
+                            <label for="feedbackType" class="form-label feedback-label">
+                                Feedback Category *
+                            </label>
+                            <select id="feedbackType"
+                                    class="form-select feedback-input" required>
+                                <option value="">Select a category</option>
+                                <option value="Event Experience">Event Experience</option>
+                                <option value="Website Design">Website Design</option>
+                                <option value="Website Functionality">Website Functionality</option>
+                                <option value="Customer Service">Customer Service</option>
+                                <option value="Suggestions">Suggestions</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="col-md-6">
+                            <label class="form-label feedback-label">
+                                How would you rate your experience? *
+                            </label>
+
+                            <div class="rating-options" role="radiogroup"
+                                 aria-label="Rate your experience from one to five stars">
+                                <input type="radio" name="rating" id="star5" value="5" required>
+                                <label for="star5" title="5 stars" aria-label="5 stars">★</label>
+
+                                <input type="radio" name="rating" id="star4" value="4">
+                                <label for="star4" title="4 stars" aria-label="4 stars">★</label>
+
+                                <input type="radio" name="rating" id="star3" value="3">
+                                <label for="star3" title="3 stars" aria-label="3 stars">★</label>
+
+                                <input type="radio" name="rating" id="star2" value="2">
+                                <label for="star2" title="2 stars" aria-label="2 stars">★</label>
+
+                                <input type="radio" name="rating" id="star1" value="1">
+                                <label for="star1" title="1 star" aria-label="1 star">★</label>
+                            </div>
+
+                            <small class="feedback-note">
+                                1 star = Poor | 5 stars = Excellent
+                            </small>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="col-12">
+                            <label for="feedbackMessage" class="form-label feedback-label">
+                                Your Comments or Suggestions *
+                            </label>
+                            <textarea id="feedbackMessage"
+                                      class="form-control feedback-input"
+                                      rows="5"
+                                      maxlength="1000"
+                                      placeholder="Tell us about your experience..."
+                                      required></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <p class="feedback-note mb-2">
+                                * Required fields. Thank you for helping us improve Muji Events.
+                            </p>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <button type="submit" class="muji-btn feedback-submit">
+                                <i class="bi bi-send me-2"></i>Submit Feedback
+                            </button>
+                        </div>
+
+                    </div>                    
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="events-footer">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+            <div>
+                <div class="fw-bold mb-1" style="letter-spacing:.1em;">MUJI EVENTS</div>
+                <div class="small">Thoughtful events. Memorable moments.</div>
+            </div>
+
+            <div class="small">
+                <a href="dashboard.html">Dashboard</a>
+                <span class="mx-2">·</span>
+                <a href="events.html">Events</a>
+                <span class="mx-2">·</span>
+                <a href="attendees.html">Attendees</a>
+                <span class="mx-2">·</span>
+                <a href="feedback.html">Feedback</a>
+                <span class="mx-2">·</span>
+                <a href="index.html">Log out</a>
+            </div>
+
+            <div class="small">
+                &copy; <span id="currentYear"></span> Muji Events
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    (() => {
+        "use strict";
+
+        const form = document.getElementById("feedbackForm");
+        const successMessage = document.getElementById("successMessage");
+
+        // Update cart badge
+        try {
+            const cartItems = JSON.parse(localStorage.getItem("mujiCartItems")) || [];
+            const count = Array.isArray(cartItems)
+                ? cartItems.reduce((total, item) => total + (Number(item.quantity) || 1), 0)
+                : 0;
+
+            document.getElementById("cartBadge").textContent = String(
+                count || Number(localStorage.getItem("mujiCartCount")) || 0
+            );
+        } catch (error) {
+            document.getElementById("cartBadge").textContent = "0";
+        }
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            if (!form.reportValidity()) return;
+
+            const selectedRating = document.querySelector('input[name="rating"]:checked');
+
+            if (!selectedRating) {
+                alert("Please select a rating before submitting.");
+                return;
+            }
+
+            const feedback = {
+                id: `feedback-${Date.now()}`,
+                name: document.getElementById("feedbackName").value.trim(),
+                email: document.getElementById("feedbackEmail").value.trim(),
+                category: document.getElementById("feedbackType").value,
+                rating: Number(selectedRating.value),
+                message: document.getElementById("feedbackMessage").value.trim(),
+                submittedAt: new Date().toISOString()
+            };
+
+            try {
+                const existingFeedback = JSON.parse(
+                    localStorage.getItem("mujiFeedback") || "[]"
+                );
+
+                const feedbackList = Array.isArray(existingFeedback)
+                    ? existingFeedback : [];
+
+                feedbackList.push(feedback);
+
+                localStorage.setItem(
+                    "mujiFeedback",
+                    JSON.stringify(feedbackList)
+                );
+
+                form.reset();
+                successMessage.style.display = "block";
+                successMessage.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+            } catch (error) {
+                alert("Unable to save your feedback in this browser. Please try again.");
+            }
+        });
+
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+    })();
+    </script>
+
+</body>
+</html>
